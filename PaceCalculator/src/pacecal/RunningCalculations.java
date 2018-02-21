@@ -52,7 +52,7 @@ public final class RunningCalculations {
 		if(u == 'k')
 			d = kilometersToMiles(d);
 
-		double paceInSeconds = t.getTimeInSeconds() / d;
+		double paceInSeconds = t.getAbstractTimeInSeconds() / d;
 		int paceMinutes = paceMinutes(paceInSeconds);
 		double paceSeconds = paceSeconds(paceInSeconds, paceMinutes);
 
@@ -68,7 +68,7 @@ public final class RunningCalculations {
 	public static Time calculateTime(char u, double d, Pace p) {
 		if(u == 'k')
 			d = kilometersToMiles(d);
-		double timeInSeconds = p.getPaceInSeconds() * d;	
+		double timeInSeconds = p.getAbstractTimeInSeconds() * d;	
 		return convertTimeSecondsToTime(timeInSeconds);
 	}
 	
@@ -86,7 +86,7 @@ public final class RunningCalculations {
 		if(u2 == 'k')
 			s = kilometersToMiles(s);
 		
-		double timeSecs = t.getTimeInSeconds();
+		double timeSecs = t.getAbstractTimeInSeconds();
 		double splitD = d / s;
 		double split = timeSecs / splitD;
 		List<Split> splitList = new ArrayList<>();
@@ -107,7 +107,7 @@ public final class RunningCalculations {
 	 * @return the distance run in terms of u
 	 */
 	public static double calculateDistance(char u, Pace p, Time t) {
-		double distance = t.getTimeInSeconds() / p.getPaceInSeconds();
+		double distance = t.getAbstractTimeInSeconds() / p.getAbstractTimeInSeconds();
 		if(u == 'k')
 			distance = milesToKilometers(distance);
 		return distance;

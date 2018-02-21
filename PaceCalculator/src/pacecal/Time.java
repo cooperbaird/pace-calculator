@@ -5,9 +5,8 @@ package pacecal;
  * 
  * @author cooperbaird
  */
-public class Time {
-	private final int hours, minutes;
-	private final double seconds;
+public class Time extends AbstractTime {
+	private final int hours;
 	
 	/**
 	 * @param hours the hours component of the time
@@ -15,9 +14,8 @@ public class Time {
 	 * @param seconds the seconds component of the time
 	 */
 	public Time(int hours, int minutes, double seconds) {
+		super(minutes, seconds);
 		this.hours = hours;
-		this.minutes = minutes;
-		this.seconds = seconds;
 	}
 
 	/**
@@ -27,32 +25,8 @@ public class Time {
 		return hours;
 	}
 
-	/**
-	 * @return the minutes
-	 */
-	public int getMinutes() {
-		return minutes;
-	}
-
-	/**
-	 * @return the seconds
-	 */
-	public double getSeconds() {
-		return seconds;
-	}
-	
-	/**
-	 * @param decimalPlaces the number of decimal places to round to
-	 * @return the seconds rounded
-	 */
-	public double getRoundedSeconds(int decimalPlaces) {
-		return RunningCalculations.roundToDecimal(seconds, decimalPlaces);
-	}
-	
-	/**
-	 * @return the total time in seconds
-	 */
-	public double getTimeInSeconds() {
-		return hours*3600 + minutes*60 + seconds;
+	@Override
+	public double getAbstractTimeInSeconds() {
+		return hours*3600 + getMinutes()*60 + getSeconds();
 	}
 }

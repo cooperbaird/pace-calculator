@@ -323,24 +323,42 @@ public class PaceCalculator extends JFrame implements ActionListener {
 	}
 	
 	/**
-	 * Finds the runner's pace given a distance and time
+	 * @return the distance units
 	 */
-	private void findPace() {
-		textArea.setText("");
+	private char getUnits() {
+		textArea.setText(""); // clear splits text area
 		
 		char units = 'm';
 		if(rdbtnKilometers.isSelected())
 			units = 'k';
+		
+		return units;
+	}
+	
+	/**
+	 * @param t an AbstractTime object
+	 * @return the seconds string component
+	 */
+	private String getStringSeconds(AbstractTime t) {
+		double roundedSecs = t.getRoundedSeconds(3);
+		String strSecs = Double.toString(roundedSecs);
+		if(roundedSecs < 10)
+			strSecs = "0" + strSecs;
+		return strSecs;
+	}
+	
+	/**
+	 * Finds the runner's pace given a distance and time
+	 */
+	private void findPace() {
+		char units = getUnits();
 		
 		Time time = parseTime();
 		Pace pace = RunningCalculations.calculatePace(units, Double.parseDouble(distTextField.getText().trim()), time);
 		
 		paceMin.setText(Integer.toString(pace.getMinutes()));
 		
-		double roundedSecs = pace.getRoundedSeconds(3);
-		String strSecs = Double.toString(roundedSecs);
-		if(roundedSecs < 10)
-			strSecs = "0" + strSecs;
+		String strSecs = getStringSeconds(pace);
 		paceSec.setText(strSecs);
 		
 		getSplits();
@@ -350,11 +368,7 @@ public class PaceCalculator extends JFrame implements ActionListener {
 	 * Finds the runner's time given a pace and distance
 	 */
 	private void findTime() {
-		textArea.setText("");
-		
-		char units = 'm';
-		if(rdbtnKilometers.isSelected())
-			units = 'k';
+		char units = getUnits();
 		
 		Pace pace = new Pace(Integer.parseInt(paceMin.getText().trim()), Double.parseDouble(paceSec.getText().trim()));
 		Time time = RunningCalculations.calculateTime(units, Double.parseDouble(distTextField.getText().trim()), pace);
@@ -367,10 +381,7 @@ public class PaceCalculator extends JFrame implements ActionListener {
 			strMinutes = "0" + strMinutes;
 		minutes.setText(strMinutes);
 		
-		double roundedSecs = time.getRoundedSeconds(3);
-		String strSecs = Double.toString(roundedSecs);
-		if(roundedSecs < 10)
-			strSecs = "0" + strSecs;
+		String strSecs = getStringSeconds(time);
 		seconds.setText(strSecs);
 		
 		getSplits();
@@ -380,11 +391,7 @@ public class PaceCalculator extends JFrame implements ActionListener {
 	 * Finds the distance run given a pace and time
 	 */
 	private void findDistance() {
-		textArea.setText("");
-		
-		char units = 'm';
-		if(rdbtnKilometers.isSelected())
-			units = 'k';
+		char units = getUnits();
 		
 		Time time = parseTime();	
 		Pace pace = new Pace(Integer.parseInt(paceMin.getText().trim()), Double.parseDouble(paceSec.getText().trim()));
