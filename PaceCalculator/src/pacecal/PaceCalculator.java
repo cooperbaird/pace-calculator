@@ -44,7 +44,7 @@ public class PaceCalculator extends JFrame implements ActionListener {
 		setResizable(false);
 		
 		JPanel panel = new JPanel();
-		getContentPane().add(panel);
+		add(panel);
 		panel.setLayout(null);
 		
 		Font helvetica = new Font("Helvetica", Font.PLAIN, 20);
